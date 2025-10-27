@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .test-card { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Function Test Page</h1>
+    
+    <div class="test-card">
+        <h3>🔑 API Key Test</h3>
+        <input type="text" id="testApiKey" placeholder="Enter API key..." style="padding: 10px; margin: 5px; width: 300px;" />
+        <button onclick="testApiKey()" class="btn-primary">Test API Key</button>
+        <div id="api-result"></div>
+    </div>
+    
+    <div class="test-card">
+        <h3>🤖 AI Functions Test</h3>
+        <button onclick="testGenerateSummary()" class="btn-success">Test Summary</button>
+        <button onclick="testGenerateMCQs()" class="btn-success">Test MCQs</button>
+        <button onclick="testGenerateFlashcards()" class="btn-success">Test Flashcards</button>
+        <div id="ai-result"></div>
+    </div>
+    
+    <div class="test-card">
+        <h3>💬 Chat Test</h3>
+        <input type="text" id="testChatInput" placeholder="Enter chat message..." style="padding: 10px; margin: 5px; width: 300px;" />
+        <button onclick="testChat()" class="btn-warning">Test Chat</button>
+        <div id="chat-result"></div>
+    </div>
+    
+    <div class="test-card">
+        <h3>🚀 Quick Access</h3>
+        <button onclick="window.open('http://localhost:8000', '_blank')" class="btn-primary">Open Main Website</button>
+    </div>
+    
+    <script>
+        function testApiKey() {
+            const apiKey = document.getElementById('testApiKey').value.trim();
+            if (!apiKey) {
+                document.getElementById('api-result').innerHTML = '<p style="color: red;">❌ Please enter an API key!</p>';
+                return;
+            }
+            
+            localStorage.setItem('cuteStudyHub_apiKey', apiKey);
+            localStorage.setItem('cuteStudyHub_provider', 'openai');
+            
+            document.getElementById('api-result').innerHTML = '<p style="color: green;">✅ API key saved! You can now use the main website.</p>';
+        }
+        
+        function testGenerateSummary() {
+            if (typeof generateSummary === 'function') {
+                document.getElementById('ai-result').innerHTML = '<p style="color: green;">✅ Generate Summary function is available!</p>';
+            } else {
+                document.getElementById('ai-result').innerHTML = '<p style="color: red;">❌ Generate Summary function not found!</p>';
+            }
+        }
+        
+        function testGenerateMCQs() {
+            if (typeof generateMCQs === 'function') {
+                document.getElementById('ai-result').innerHTML = '<p style="color: green;">✅ Generate MCQs function is available!</p>';
+            } else {
+                document.getElementById('ai-result').innerHTML = '<p style="color: red;">❌ Generate MCQs function not found!</p>';
+            }
+        }
+        
+        function testGenerateFlashcards() {
+            if (typeof generateFlashcards === 'function') {
+                document.getElementById('ai-result').innerHTML = '<p style="color: green;">✅ Generate Flashcards function is available!</p>';
+            } else {
+                document.getElementById('ai-result').innerHTML = '<p style="color: red;">❌ Generate Flashcards function not found!</p>';
+            }
+        }
+        
+        function testChat() {
+            const message = document.getElementById('testChatInput').value.trim();
+            if (!message) {
+                document.getElementById('chat-result').innerHTML = '<p style="color: red;">❌ Please enter a chat message!</p>';
+                return;
+            }
+            
+            if (typeof sendChatMessage === 'function') {
+                document.getElementById('chat-result').innerHTML = '<p style="color: green;">✅ Chat function is available! Message: "' + message + '"</p>';
+            } else {
+                document.getElementById('chat-result').innerHTML = '<p style="color: red;">❌ Chat function not found!</p>';
+            }
+        }
+        
+        // Auto-load functions from main app
+        window.addEventListener('load', function() {
+            console.log('🧪 Test page loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Key Test</title>
+</head>
+<body>
+    <h1>Gemini API Key Test</h1>
+    <button onclick="testAPI()">Test API Key</button>
+    <div id="result"></div>
+
+    <script>
+    async function testAPI() {
+        const apiKey = 'AIzaSyAZ3Ga5rXCnTWedxWM9kDVyLe8pYhF3kZo';
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
+        
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
+                        role: 'user',
+                        parts: [{ text: 'Hello, test message' }]
+                    }]
+                })
+            });
+            
+            const data = await response.json();
+            document.getElementById('result').innerHTML = 
+                `<h3>Response Status: ${response.status}</h3>
+                 <pre>${JSON.stringify(data, null, 2)}</pre>`;
+        } catch (error) {
+            document.getElementById('result').innerHTML = 
+                `<h3>Error:</h3><pre>${error.message}</pre>`;
+        }
+    }
+    </script>
+</body>
+</html>

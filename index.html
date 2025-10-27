@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Cute Study Hub ✨</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="flower-decoration">🌸✨🌺💖🌼</div>
+            <h1>🌸 Cute Study Hub ✨</h1>
+            <p>Your adorable AI study companion! 💕</p>
+            
+            <div class="form-group">
+                <label>🤖 API Provider:</label>
+                <select id="apiProvider" class="input-cute">
+                    <option value="openai">OpenAI 🚀</option>
+                    <option value="gemini">Google Gemini 🌟</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>🔑 API Key:</label>
+                <input type="password" id="apiKey" placeholder="Enter your API key" class="input-cute">
+            </div>
+            
+            <button onclick="login()" class="btn-cute-3d">Login ✨</button>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <h1>🌸 Cute Study Hub ✨</h1>
+            <button onclick="logout()" class="btn-cute-3d">Logout 👋</button>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button onclick="showSection('ai-assistant')" class="nav-btn active">🤖 AI Assistant</button>
+            <button onclick="showSection('web-scraper')" class="nav-btn">🕷️ Web Scraper</button>
+            <button onclick="showSection('pdf-magic')" class="nav-btn">📄 PDF Magic</button>
+            <button onclick="showSection('notes')" class="nav-btn">📝 My Notes</button>
+            <button onclick="showSection('calendar')" class="nav-btn">📅 Calendar</button>
+            <button onclick="showSection('timer')" class="nav-btn">⏰ Timer & Clock</button>
+            <button onclick="showSection('study-groups')" class="nav-btn">👥 Study Groups</button>
+            <button onclick="showSection('wellness')" class="nav-btn">💪 Wellness</button>
+            <button onclick="showSection('chat')" class="nav-btn">💬 Chat History</button>
+        </nav>
+
+        <!-- AI Assistant Section -->
+        <section id="ai-assistant" class="section active">
+            <div class="container">
+                <h2>🤖 AI Assistant</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <textarea id="inputText" placeholder="Enter your content here... 💭" class="input-cute" rows="5"></textarea>
+                        <div class="button-group">
+                            <button onclick="generateSummary()" class="btn-cute-3d">Summarize ✨</button>
+                            <button onclick="generateMCQs()" class="btn-cute-3d">MCQ Test ❓</button>
+                            <button onclick="generateFlashcards()" class="btn-cute-3d">Flashcards 🃏</button>
+                        </div>
+                        <div id="summaryOutput" class="output-content"></div>
+                        <div id="mcqOutput" class="output-content"></div>
+                        <div id="flashcardsOutput" class="output-content"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Web Scraper Section -->
+        <section id="web-scraper" class="section">
+            <div class="container">
+                <h2>🕷️ Web Scraper</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <input id="scrapeUrl" type="url" placeholder="Enter website URL 🌐" class="input-cute">
+                        <button onclick="scrapeWebsite()" class="btn-cute-3d">Scrape Content ✨</button>
+                        <div id="scrapedContent" class="output-content"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PDF Magic Section -->
+        <section id="pdf-magic" class="section">
+            <div class="container">
+                <h2>📄 PDF Magic</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="upload-area" onclick="document.getElementById('pdfInput').click()">
+                            <div class="upload-icon">📄</div>
+                            <p>Click to upload PDF or drag & drop 💫</p>
+                            <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
+                        </div>
+                        <div id="pdfContent" class="output-content"></div>
+                        <div id="pdfActions" style="display: none;">
+                            <button onclick="showQuestionInput()" class="btn-cute-3d">Ask Question 📝</button>
+                            <button onclick="summarizePdf()" class="btn-cute-3d">Summarize PDF 📄</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notes" class="section">
+            <div class="container">
+                <h2>📝 My Notes</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <button onclick="showAddNoteModal()" class="btn-cute-3d">Add Note ✨</button>
+                        <div id="notesGrid" class="notes-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar" class="section">
+            <div class="container">
+                <h2>📅 Calendar</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <button onclick="showAddEventModal()" class="btn-cute-3d">Add Event ✨</button>
+                        <div id="calendarGrid" class="calendar-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timer Section -->
+        <section id="timer" class="section">
+            <div class="container">
+                <h2>⏰ Timer & Clock</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <div id="clockDisplay" class="clock-display"></div>
+                        <div id="timerDisplay" class="timer-display"></div>
+                        <button onclick="startTimer()" class="btn-cute-3d">Start Timer</button>
+                        <button onclick="stopTimer()" class="btn-cute-3d">Stop Timer</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Groups Section -->
+        <section id="study-groups" class="section">
+            <div class="container">
+                <h2>👥 Study Groups</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <button onclick="showCreateGroupForm()" class="btn-cute-3d">Create Group ✨</button>
+                        <div id="studyGroupsList" class="study-groups-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wellness Section -->
+        <section id="wellness" class="section">
+            <div class="container">
+                <h2>💪 Wellness</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <button onclick="toggleEyeReminders()" class="btn-cute-3d">Eye Reminders 👁️</button>
+                        <button onclick="togglePostureReminders()" class="btn-cute-3d">Posture Reminders 🧘</button>
+                        <div id="wellnessLog" class="wellness-log"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat Section -->
+        <section id="chat" class="section">
+            <div class="container">
+                <h2>💬 Chat History</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <div id="chatLog" class="chat-log"></div>
+                        <div class="chat-input-group">
+                            <input id="chatPrompt" type="text" placeholder="Ask me anything... 💭" class="input-cute">
+                            <button onclick="sendChatMessage()" class="btn-cute-3d">Send ✨</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js?v=7"></script>
+</body>
+</html>

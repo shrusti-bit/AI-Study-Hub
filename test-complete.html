@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Test - Cute Study Hub</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .test-card { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .status { padding: 5px 10px; border-radius: 4px; font-weight: bold; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
+        .btn-danger { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Complete Website Test</h1>
+    
+    <div class="test-card">
+        <h3>🔍 System Status</h3>
+        <button onclick="runSystemTest()" class="btn-primary">Test System</button>
+        <div id="system-results"></div>
+    </div>
+    
+    <div class="test-card">
+        <h3>🔑 Login Test</h3>
+        <button onclick="testLogin()" class="btn-success">Test Login</button>
+        <div id="login-results"></div>
+    </div>
+    
+    <div class="test-card">
+        <h3>🎯 Feature Test</h3>
+        <button onclick="testFeatures()" class="btn-warning">Test All Features</button>
+        <div id="feature-results"></div>
+    </div>
+    
+    <div class="test-card">
+        <h3>🚀 Quick Access</h3>
+        <button onclick="window.open('http://localhost:8000', '_blank')" class="btn-primary">Open Main Website</button>
+        <button onclick="window.open('http://localhost:8000/test-complete.html', '_blank')" class="btn-success">Open This Test Page</button>
+    </div>
+    
+    <script>
+        function runSystemTest() {
+            let results = '<h4>🔍 System Test Results:</h4>';
+            
+            // Test 1: Basic JavaScript
+            try {
+                results += '<p>✅ JavaScript is working</p>';
+            } catch (e) {
+                results += '<p>❌ JavaScript error: ' + e.message + '</p>';
+            }
+            
+            // Test 2: Local Storage
+            try {
+                localStorage.setItem('test', 'value');
+                localStorage.removeItem('test');
+                results += '<p>✅ Local Storage is working</p>';
+            } catch (e) {
+                results += '<p>❌ Local Storage error: ' + e.message + '</p>';
+            }
+            
+            // Test 3: Fetch API
+            try {
+                if (typeof fetch !== 'undefined') {
+                    results += '<p>✅ Fetch API is available</p>';
+                } else {
+                    results += '<p>❌ Fetch API not available</p>';
+                }
+            } catch (e) {
+                results += '<p>❌ Fetch API error: ' + e.message + '</p>';
+            }
+            
+            // Test 4: Console
+            try {
+                console.log('Test log');
+                results += '<p>✅ Console is working</p>';
+            } catch (e) {
+                results += '<p>❌ Console error: ' + e.message + '</p>';
+            }
+            
+            document.getElementById('system-results').innerHTML = results;
+        }
+        
+        function testLogin() {
+            let results = '<h4>🔑 Login Test Results:</h4>';
+            
+            // Test login function
+            if (typeof login === 'function') {
+                results += '<p>✅ Login function is available</p>';
+            } else {
+                results += '<p>❌ Login function not found</p>';
+            }
+            
+            // Test logout function
+            if (typeof logout === 'function') {
+                results += '<p>✅ Logout function is available</p>';
+            } else {
+                results += '<p>❌ Logout function not found</p>';
+            }
+            
+            // Test global functions
+            const globalFunctions = ['showSection', 'generateSummary', 'generateMCQs', 'sendChatMessage'];
+            globalFunctions.forEach(func => {
+                if (typeof window[func] === 'function') {
+                    results += '<p>✅ ' + func + ' function is available</p>';
+                } else {
+                    results += '<p>❌ ' + func + ' function not found</p>';
+                }
+            });
+            
+            document.getElementById('login-results').innerHTML = results;
+        }
+        
+        function testFeatures() {
+            let results = '<h4>🎯 Feature Test Results:</h4>';
+            
+            // Test key features
+            const features = [
+                'generateSummary', 'generateMCQs', 'generateFlashcards',
+                'sendChatMessage', 'handlePdfUpload', 'scrapeWebsite',
+                'showAddNoteModal', 'showAddEventModal', 'showCreateGroupForm',
+                'toggleEyeReminders', 'togglePostureReminders'
+            ];
+            
+            features.forEach(feature => {
+                if (typeof window[feature] === 'function') {
+                    results += '<p>✅ ' + feature + ' is available</p>';
+                } else {
+                    results += '<p>❌ ' + feature + ' not found</p>';
+                }
+            });
+            
+            document.getElementById('feature-results').innerHTML = results;
+        }
+        
+        // Auto-run tests on page load
+        window.addEventListener('load', function() {
+            console.log('🧪 Test page loaded');
+            runSystemTest();
+        });
+    </script>
+</body>
+</html>
